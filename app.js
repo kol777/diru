@@ -1,5 +1,5 @@
 const express = require('express');
-
+const passportSetup = require('./config/passport-setup');
 // import routes
 const authRoutes = require('./routes/auth-routes');
 
