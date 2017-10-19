@@ -9,7 +9,6 @@ const FacebookStrategy = require('passport-facebook');
 const GithubStrategy = require('passport-github2');
 
 
-
 //id + display_name
 passport.use(
   new GoogleStrategy({
@@ -19,13 +18,19 @@ passport.use(
     clientID: keys.google.clientID,
     clientSecret: keys.google.clientSecret
   }, (accessToken, refreshToken, profile, done) => {
-    // console.log('passport callback function fired')
-    // console.log(profile);
-    new User({
-      id: profile.id,
-      username: profile.displayName
-    }).save().then((newUser) => {
-      console.log('new user created: ', newUser);
+
+    User.findOne({id: profile.id}).then((currentUser) => {
+      if(currentUser) {
+        console.log('user is: ', currentUser);
+      }
+      else {
+        new User({
+          id: profile.id,
+          username: profile.displayName
+        }).save().then((newUser) => {
+          console.log('new user created: ', newUser);
+        });
+      }
     });
   })
 );
@@ -41,11 +46,18 @@ passport.use(
   }, (accessToken, refreshToken, profile, done) => {
     console.log('passport callback function fired')
     console.log(profile);
-    new User({
-      id: profile.id,
-      username: profile.username
-    }).save().then((newUser) => {
-      console.log('new user created: ', newUser);
+    User.findOne({id: profile.id}).then((currentUser) => {
+      if(currentUser) {
+        console.log('user is: ', currentUser);
+      }
+      else {
+        new User({
+          id: profile.id,
+          username: profile.username
+        }).save().then((newUser) => {
+          console.log('new user created: ', newUser);
+        });
+      }
     });
   })
 );
@@ -60,11 +72,18 @@ passport.use(
     clientSecret: keys.facebook.clientSecret
   }, (accessToken, refreshToken, profile, done) => {
     console.log(profile);
-    new User({
-      id: profile.id,
-      username: profile.displayName
-    }).save().then((newUser) => {
-      console.log('new user created: ', newUser);
+    User.findOne({id: profile.id}).then((currentUser) => {
+      if(currentUser) {
+        console.log('user is: ', currentUser);
+      }
+      else {
+        new User({
+          id: profile.id,
+          username: profile.displayName
+        }).save().then((newUser) => {
+          console.log('new user created: ', newUser);
+        });
+      }
     });
   // passport callback function
   })
@@ -80,11 +99,18 @@ passport.use(
     clientSecret: keys.github.clientSecret
   }, (accessToken, refreshToken, profile, done) => {
     console.log(profile);
-    new User({
-      id: profile.id,
-      username: profile.username
-    }).save().then((newUser) => {
-      console.log('new user created: ', newUser);
+    User.findOne({id: profile.id}).then((currentUser) => {
+      if(currentUser) {
+        console.log('user is: ', currentUser);
+      }
+      else {
+        new User({
+          id: profile.id,
+          username: profile.username
+        }).save().then((newUser) => {
+          console.log('new user created: ', newUser);
+        });
+      }
     });
   // passport callback function
   })
