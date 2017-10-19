@@ -28,7 +28,9 @@ passport.use(
     callbackURL:'/auth/discord/redirect',
     clientID: keys.discord.clientID,
     clientSecret: keys.discord.clientSecret
-  }, () => {
+  }, (accessToken, refreshToken, profile, done) => {
+    console.log('passport callback function fired')
+    console.log(profile);
   // passport callback function
   })
 )
@@ -40,7 +42,8 @@ passport.use(
     callbackURL:'/auth/facebook/redirect',
     clientID: keys.facebook.clientID,
     clientSecret: keys.facebook.clientSecret
-  }, () => {
+  }, (accessToken, refreshToken, profile, done) => {
+    console.log(profile);
   // passport callback function
   })
 )
@@ -52,7 +55,8 @@ passport.use(
     callbackURL:'/auth/github/redirect',
     clientID: keys.github.clientID,
     clientSecret: keys.github.clientSecret
-  }, () => {
+  }, (accessToken, refreshToken, profile, done) => {
+    console.log(profile);
   // passport callback function
   })
 )
