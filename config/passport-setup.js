@@ -1,12 +1,16 @@
 const passport = require('passport');
+const keys = require('./keys');
+const User = require('../models/user-model')
+
 // http://passportjs.org/ get strategies
 const GoogleStrategy = require('passport-google-oauth20');
 const DiscordStrategy = require('passport-discord');
 const FacebookStrategy = require('passport-facebook');
 const GithubStrategy = require('passport-github2');
 
-const keys = require('./keys');
 
+
+//id + display_name
 passport.use(
   new GoogleStrategy({
   // options for the Google Strategy
@@ -15,12 +19,18 @@ passport.use(
     clientID: keys.google.clientID,
     clientSecret: keys.google.clientSecret
   }, (accessToken, refreshToken, profile, done) => {
-    console.log('passport callback function fired')
-    console.log(profile);
-  // passport callback function
+    // console.log('passport callback function fired')
+    // console.log(profile);
+    new User({
+      id: profile.id,
+      username: profile.displayName
+    }).save().then((newUser) => {
+      console.log('new user created: ', newUser);
+    });
   })
-)
+);
 
+//id + username
 passport.use(
   new DiscordStrategy({
   // options for the Discord Strategy
@@ -31,10 +41,16 @@ passport.use(
   }, (accessToken, refreshToken, profile, done) => {
     console.log('passport callback function fired')
     console.log(profile);
-  // passport callback function
+    new User({
+      id: profile.id,
+      username: profile.username
+    }).save().then((newUser) => {
+      console.log('new user created: ', newUser);
+    });
   })
-)
+);
 
+//id + displayName
 passport.use(
   new FacebookStrategy({
   // options for the Facebook Strategy
@@ -44,10 +60,17 @@ passport.use(
     clientSecret: keys.facebook.clientSecret
   }, (accessToken, refreshToken, profile, done) => {
     console.log(profile);
+    new User({
+      id: profile.id,
+      username: profile.displayName
+    }).save().then((newUser) => {
+      console.log('new user created: ', newUser);
+    });
   // passport callback function
   })
-)
+);
 
+//id + username
 passport.use(
   new GithubStrategy({
   // options for the Github Strategy
@@ -57,6 +80,12 @@ passport.use(
     clientSecret: keys.github.clientSecret
   }, (accessToken, refreshToken, profile, done) => {
     console.log(profile);
+    new User({
+      id: profile.id,
+      username: profile.username
+    }).save().then((newUser) => {
+      console.log('new user created: ', newUser);
+    });
   // passport callback function
   })
-)
+);
