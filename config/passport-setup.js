@@ -8,6 +8,15 @@ const DiscordStrategy = require('passport-discord');
 const FacebookStrategy = require('passport-facebook');
 const GithubStrategy = require('passport-github2');
 
+passport.serializeUser((user, done) => {
+  done(null, user.id); //null because we won't have any errors. ID will be in the database.
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id).then((user) => {
+    done(null, user.id); //null because we won't have any errors. ID will be in the database.
+  });
+});
 
 //id + display_name
 passport.use(
@@ -22,13 +31,15 @@ passport.use(
     User.findOne({id: profile.id}).then((currentUser) => {
       if(currentUser) {
         console.log('user is: ', currentUser);
+        done(null, currentUser); // This will serialize the user.
       }
       else {
         new User({
-          id: profile.id,
+          profileid: profile.id,
           username: profile.displayName
         }).save().then((newUser) => {
           console.log('new user created: ', newUser);
+          done(null, newUser); // This will serialize a new user
         });
       }
     });
@@ -49,13 +60,15 @@ passport.use(
     User.findOne({id: profile.id}).then((currentUser) => {
       if(currentUser) {
         console.log('user is: ', currentUser);
+        done(null, currentUser);
       }
       else {
         new User({
-          id: profile.id,
+          profileid: profile.id,
           username: profile.username
         }).save().then((newUser) => {
           console.log('new user created: ', newUser);
+          done(null, newUser);
         });
       }
     });
@@ -75,13 +88,15 @@ passport.use(
     User.findOne({id: profile.id}).then((currentUser) => {
       if(currentUser) {
         console.log('user is: ', currentUser);
+        done(null, currentUser);
       }
       else {
         new User({
-          id: profile.id,
+          profileid: profile.id,
           username: profile.displayName
         }).save().then((newUser) => {
           console.log('new user created: ', newUser);
+          done(null, newUser);
         });
       }
     });
@@ -102,13 +117,15 @@ passport.use(
     User.findOne({id: profile.id}).then((currentUser) => {
       if(currentUser) {
         console.log('user is: ', currentUser);
+        done(null, currentUser);
       }
       else {
         new User({
-          id: profile.id,
+          profileid: profile.id,
           username: profile.username
         }).save().then((newUser) => {
           console.log('new user created: ', newUser);
+          done(null, newUser);
         });
       }
     });
