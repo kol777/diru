@@ -4,7 +4,7 @@ const passport = require('passport');
 
 // auth login
 router.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login', { user: req.user });
 });
 
 // auth logout
@@ -35,6 +35,7 @@ router.get('/github', passport.authenticate('github', {
 
 // callback route for google to redirect to
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+  console.log('Am intrat')
   res.send(req.user);
 });
 
