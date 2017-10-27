@@ -9,7 +9,6 @@ const FacebookStrategy = require('passport-facebook');
 const GithubStrategy = require('passport-github2');
 
 passport.serializeUser((user, done) => {
-  console.log('Serial');
   done(null, user.id); //null because we won't have any errors. ID will be in the database.
 });
 
