@@ -9,13 +9,13 @@ const FacebookStrategy = require('passport-facebook');
 const GithubStrategy = require('passport-github2');
 
 passport.serializeUser((user, done) => {
+  console.log('Serial');
   done(null, user.id); //null because we won't have any errors. ID will be in the database.
 });
 
-passport.deserializeUser(function(id, done) {
-  //retrieve user from database by id
-  User.findById(id, function(err, user) {
-    done(err, user);
+passport.deserializeUser((id, done) => {
+  User.findById(id).then((user) => {
+    done(null, user); //null because we won't have any errors. ID will be in the database.
   });
 });
 

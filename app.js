@@ -9,6 +9,7 @@ const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const app = express();
 
+const passport = require('passport');
 // set up ejs view
 app.set('view engine', 'ejs');
 
@@ -17,8 +18,9 @@ app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
 
 app.use(cookieSession({
-  maxAge: 24 * 60 * 60 * 1000, // 24 hours in milisecs
-  keys: [keys.session.cookiekey]
+  // 24 hours in milisecs
+  maxAge: 24 * 60 * 60 * 1000,
+  keys: [keys.session.cookieKey]
 }));
 
 //init passportSetup
