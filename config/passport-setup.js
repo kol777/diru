@@ -15,6 +15,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, done) => {
   User.findById(id).then((user) => {
+    console.log('DeSerial')
     done(null, user); //null because we won't have any errors. ID will be in the database.
   });
 });
