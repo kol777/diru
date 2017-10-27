@@ -9,12 +9,12 @@ const FacebookStrategy = require('passport-facebook');
 const GithubStrategy = require('passport-github2');
 
 passport.serializeUser((user, done) => {
-  done(null, user.id); //null because we won't have any errors. ID will be in the database.
+  done(null, user.profileid); //null because we won't have any errors. ID will be in the database.
 });
 
-passport.deserializeUser((id, done) => {
-  User.findById(id).then((user) => {
-    done(null, user.id); //null because we won't have any errors. ID will be in the database.
+passport.deserializeUser((profileid, done) => {
+  User.findById(profileid).then((user) => {
+    done(null, user.profileid); //null because we won't have any errors. ID will be in the database.
   });
 });
 
@@ -28,7 +28,7 @@ passport.use(
     clientSecret: keys.google.clientSecret
   }, (accessToken, refreshToken, profile, done) => {
 
-    User.findOne({id: profile.id}).then((currentUser) => {
+    User.findOne({id: profile.profileid}).then((currentUser) => {
       if(currentUser) {
         console.log('user is: ', currentUser);
         done(null, currentUser); // This will serialize the user.
@@ -57,7 +57,7 @@ passport.use(
   }, (accessToken, refreshToken, profile, done) => {
     console.log('passport callback function fired')
     console.log(profile);
-    User.findOne({id: profile.id}).then((currentUser) => {
+    User.findOne({id: profile.profileid}).then((currentUser) => {
       if(currentUser) {
         console.log('user is: ', currentUser);
         done(null, currentUser);
@@ -85,7 +85,7 @@ passport.use(
     clientSecret: keys.facebook.clientSecret
   }, (accessToken, refreshToken, profile, done) => {
     console.log(profile);
-    User.findOne({id: profile.id}).then((currentUser) => {
+    User.findOne({id: profile.profileid}).then((currentUser) => {
       if(currentUser) {
         console.log('user is: ', currentUser);
         done(null, currentUser);
@@ -114,7 +114,7 @@ passport.use(
     clientSecret: keys.github.clientSecret
   }, (accessToken, refreshToken, profile, done) => {
     console.log(profile);
-    User.findOne({id: profile.id}).then((currentUser) => {
+    User.findOne({id: profile.profileid}).then((currentUser) => {
       if(currentUser) {
         console.log('user is: ', currentUser);
         done(null, currentUser);
