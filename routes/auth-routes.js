@@ -20,7 +20,7 @@ router.get('/google', passport.authenticate('google', {
 
 // auth with discord
 router.get('/discord', passport.authenticate('discord', {
-  scope: ['profile']
+  scope: ['identify']
 }));
 
 // auth with facebook
@@ -34,22 +34,22 @@ router.get('/github', passport.authenticate('github', {
 }));
 
 // callback route for google to redirect to
-router.get('/google/redirect', (req, res) => {
+router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   res.send('you reached the callback uri for google')
 });
 
 // discord callback
-router.get('/discord/redirect', (req, res) => {
+router.get('/discord/redirect', passport.authenticate('discord'), (req, res) => {
   res.send('you reached the callback uri for discord')
 });
 
 // facebook callback
-router.get('/facebook/redirect', (req, res) => {
+router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) => {
   res.send('you reached the callback uri for facebook')
 });
 
 // github callback
-router.get('/github/redirect', (req, res) => {
+router.get('/github/redirect', passport.authenticate('github'), (req, res) => {
   res.send('you reached the callback uri for github')
 });
 
