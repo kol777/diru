@@ -35,8 +35,8 @@ router.get('/github', passport.authenticate('github', {
 
 // callback route for google to redirect to
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-  console.log('Am intrat')
-  res.send(req.user);
+    // res.send(req.user);
+  res.redirect('/profile');
 });
 
 // discord callback

@@ -2,6 +2,7 @@ const express = require('express');
 const passportSetup = require('./config/passport-setup');
 // import routes
 const authRoutes = require('./routes/auth-routes');
+const profileRoutes = require('./routes/profile-routes');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
@@ -13,6 +14,7 @@ app.set('view engine', 'ejs');
 
 // set up routes
 app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
 
 app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000, // 24 hours in milisecs

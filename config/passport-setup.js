@@ -3,7 +3,7 @@ const keys = require('./keys');
 const User = require('../models/user-model')
 
 // http://passportjs.org/ get strategies
-const GoogleStrategy = require('passport-google-oauth20');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const DiscordStrategy = require('passport-discord');
 const FacebookStrategy = require('passport-facebook');
 const GithubStrategy = require('passport-github2');
