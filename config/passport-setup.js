@@ -3,7 +3,7 @@ const keys = require('./keys');
 const User = require('../models/user-model')
 
 // http://passportjs.org/ get strategies
-const GoogleStrategy = require('passport-google-oauth20');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const DiscordStrategy = require('passport-discord');
 const FacebookStrategy = require('passport-facebook');
 const GithubStrategy = require('passport-github2');
@@ -14,9 +14,11 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, done) => {
   User.findById(id).then((user) => {
-    done(null, user.id); //null because we won't have any errors. ID will be in the database.
+    console.log('DeSerial')
+    done(null, user); //null because we won't have any errors. ID will be in the database.
   });
 });
+
 
 //id + display_name
 passport.use(
@@ -28,7 +30,7 @@ passport.use(
     clientSecret: keys.google.clientSecret
   }, (accessToken, refreshToken, profile, done) => {
 
-    User.findOne({id: profile.id}).then((currentUser) => {
+    User.findOne({profileid: profile.id}).then((currentUser) => {
       if(currentUser) {
         console.log('user is: ', currentUser);
         done(null, currentUser); // This will serialize the user.
@@ -57,7 +59,7 @@ passport.use(
   }, (accessToken, refreshToken, profile, done) => {
     console.log('passport callback function fired')
     console.log(profile);
-    User.findOne({id: profile.id}).then((currentUser) => {
+    User.findOne({profileid: profile.id}).then((currentUser) => {
       if(currentUser) {
         console.log('user is: ', currentUser);
         done(null, currentUser);
@@ -85,7 +87,7 @@ passport.use(
     clientSecret: keys.facebook.clientSecret
   }, (accessToken, refreshToken, profile, done) => {
     console.log(profile);
-    User.findOne({id: profile.id}).then((currentUser) => {
+    User.findOne({profileid: profile.id}).then((currentUser)=> {
       if(currentUser) {
         console.log('user is: ', currentUser);
         done(null, currentUser);
@@ -114,7 +116,7 @@ passport.use(
     clientSecret: keys.github.clientSecret
   }, (accessToken, refreshToken, profile, done) => {
     console.log(profile);
-    User.findOne({id: profile.id}).then((currentUser) => {
+    User.findOne({profileid: profile.id}).then((currentUser)=> {
       if(currentUser) {
         console.log('user is: ', currentUser);
         done(null, currentUser);

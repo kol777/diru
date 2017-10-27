@@ -4,7 +4,7 @@ const passport = require('passport');
 
 // auth login
 router.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login', { user: req.user });
 });
 
 // auth logout
@@ -35,22 +35,24 @@ router.get('/github', passport.authenticate('github', {
 
 // callback route for google to redirect to
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-  res.send('you reached the callback uri for google')
+  res.send(req.user);
+  //res.redirect('profile');
 });
 
 // discord callback
 router.get('/discord/redirect', passport.authenticate('discord'), (req, res) => {
-  res.send('you reached the callback uri for discord')
+  //res.send('you reached the callback uri for discord')
+  res.send(req.user);
 });
 
 // facebook callback
 router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) => {
-  res.send('you reached the callback uri for facebook')
+  res.send(req.user);
 });
 
 // github callback
 router.get('/github/redirect', passport.authenticate('github'), (req, res) => {
-  res.send('you reached the callback uri for github')
+  res.send(req.user);
 });
 
 module.exports = router;
