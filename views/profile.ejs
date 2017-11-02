@@ -42,17 +42,20 @@
         <nav>
             <ul>
               <li><a href="/">Diru</a></li>
-              <li><a href="/auth/login">Login</a></li>
-              <li><a href="/auth/logout">Logout</a></li>
+              <% if (utilizator) { %>
+              <li><a href="/auth/logout">Log out</a></li>
+              <% } else { %>
+                 <li><a href="/auth/login">Login</a></li>
+              <% } %>
+              <li><a href="/profile">Profile</a></li>
             </ul>
         </nav>
         <header>
           <h1>Welcome to your profile, <%=utilizator.username%></h1>
         </header>
         <main>
-          <p>
-            extra information about yourself
-          </p>
+            <img src="<%= utilizator.image %>" />
+            <p>This is your profile thumbnail</p>
         </main>
 
     </body>
