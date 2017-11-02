@@ -38,7 +38,8 @@ passport.use(
       else {
         new User({
           profileid: profile.id,
-          username: profile.displayName
+          username: profile.displayName,
+          image: profile._json.image.url
         }).save().then((newUser) => {
           console.log('new user created: ', newUser);
           done(null, newUser); // This will serialize a new user
@@ -67,7 +68,8 @@ passport.use(
       else {
         new User({
           profileid: profile.id,
-          username: profile.username
+          username: profile.username,
+          image: "https://cdn.discordapp.com/avatars/" + profile.id + "/" + profile.avatar
         }).save().then((newUser) => {
           console.log('new user created: ', newUser);
           done(null, newUser);
@@ -84,7 +86,8 @@ passport.use(
   // developers.facebook.com
     callbackURL:'/auth/facebook/redirect',
     clientID: keys.facebook.clientID,
-    clientSecret: keys.facebook.clientSecret
+    clientSecret: keys.facebook.clientSecret,
+    profileFields: ['id', 'displayName', 'picture.type(large)']
   }, (accessToken, refreshToken, profile, done) => {
     console.log(profile);
     User.findOne({profileid: profile.id}).then((currentUser)=> {
@@ -95,7 +98,8 @@ passport.use(
       else {
         new User({
           profileid: profile.id,
-          username: profile.displayName
+          username: profile.displayName,
+          image:  profile.photos[0].value
         }).save().then((newUser) => {
           console.log('new user created: ', newUser);
           done(null, newUser);
@@ -124,7 +128,8 @@ passport.use(
       else {
         new User({
           profileid: profile.id,
-          username: profile.username
+          username: profile.username,
+          image: profile._json.avatar_url
         }).save().then((newUser) => {
           console.log('new user created: ', newUser);
           done(null, newUser);
